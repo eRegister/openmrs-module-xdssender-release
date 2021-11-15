@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+	
+	<!-- Base Module Properties -->
+	<id>xds-sender</id>
+	<name>XDS Sender</name>
+	<version>1.0.2</version>
+	<package>org.openmrs.module.xdssender</package>
+	<author>SolDevelo</author>
+	<description>
+			Module for sending XDS.b documents for encounters and retrieving XDS.b document from the XDS repository
+	</description>
+
+	<activator>org.openmrs.module.xdssender.XdsSenderActivator</activator>
+
+	<require_modules>
+		<require_module version="2.5">
+			org.openmrs.event
+		</require_module>
+	</require_modules>
+	
+	<!-- <updateURL>https://modules.openmrs.org/modules/download/xds-sender/update.rdf</updateURL> -->
+	<!-- /Base Module Properties -->
+	
+	<require_version>2.0.5</require_version>
+	
+	<!-- Extensions -->
+	<extension>
+		<point>org.openmrs.admin.list</point>
+		<class>org.openmrs.module.xdssender.extension.html.AdminList</class>
+	</extension>
+
+	<aware_of_modules>
+		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
+		<aware_of_module>org.openmrs.event</aware_of_module>
+	</aware_of_modules>
+
+
+	<globalProperty>
+		<property>xdssender.repositoryEndpoint</property>
+		<description>Specifies endpoint to XDS repository</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.registryEndpoint</property>
+		<description>Specifies endpoint to XDS registry</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.xdsrepository.username</property>
+		<description>Specifies username for authentication to XDS repository</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.xdsrepository.password</property>
+		<description>Specifies password for authentication to XDS repository</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.openmrs.username</property>
+		<description>Specifies username for authentication in OpenMRS</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.openmrs.password</property>
+		<description>Specifies password for authentication in OpenMRS</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.openmrs.provider.role.clinician</property>
+		<description>Specifies role for add provider to XDS documents</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.openmrs.provider.role.doctor</property>
+		<description>Specifies role for add provider to XDS documents</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.openmrs.moduleUsedToDetermineSoftwareVersion</property>
+		<defaultValue>isanteplusreports</defaultValue>
+		<description>Specifies the module name which will be used to determine the software version.</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.exportCcdEndpoint</property>
+		<defaultValue>https://thebukana.org:8080/openmrs/ws/rest/exportccd/ccd</defaultValue>
+		<description>Specifies the export ccd module endpoint address (OpenSHR)</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.exportObsEndpoint</property>
+		<defaultValue>https://thebukana.org:8080/openmrs/ws/rest/v1/obs</defaultValue>
+		<description>Specifies the export shr obs endpoint address (OpenSHR)</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.oshr.username</property>
+		<description>Specifies the OpenSHR username</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.oshr.password</property>
+		<description>Specifies the OpenSHR password</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.exportCcd.ignoreCerts</property>
+		<defaultValue>false</defaultValue>
+		<description>Determines if ccd downloading from OpenSHR should ignore certificates</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.ccd.errorHandler.implementation</property>
+		<defaultValue>outgoingmessageexceptions.CcdErrorHandlingService</defaultValue>
+		<description>
+			Specify a Spring bean name of CCD error handler service
+		</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.xdsB.errorHandler.implementation</property>
+		<defaultValue>outgoingmessageexceptions.XdsBErrorHandlingService</defaultValue>
+		<description>
+			Specify a Spring bean name of XDS.b error handler service
+		</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.pullNotificationsTaskInterval</property>
+		<defaultValue>3600</defaultValue>
+		<description>Interval time (in seconds) to execute pulling notifications from Pull Point task</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.notificationsPullPoint.username</property>
+		<description>Username to authorize int the Notifications Pull Point</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.notificationsPullPoint.password</property>
+		<description>Password to authorize int the Notifications Pull Point</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.notificationsPullPoint.endpoint</property>
+		<description>Endpoint used to fetch Notifications from the Pull Point</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.ecidRoot</property>
+		<description>Authority domain for the OpenEMPI enterprise Global ID</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.locationRoot</property>
+		<description>The ID used for the locationRoot</description>
+	</globalProperty>
+
+	<globalProperty>
+		<property>xdssender.codeNationalRoot</property>
+		<description>Authority domain for the specific health facility patient identifier domain</description>
+	</globalProperty>
+
+	<!-- AOP
+	<advice>
+		<point>org.openmrs.api.FormService</point>
+		<class>org.openmrs.module.xds-sender.advice.DuplicateFormAdvisor</class>
+	</advice>
+	 /AOP -->
+	
+	
+	<!-- Required Privileges 
+	<privilege>
+		<name>Form Entry</name>
+		<description>Allows user to access Form Entry pages/functions</description>
+	</privilege>
+	 /Required Privileges -->
+
+
+	<!-- Required Global Properties 
+	<globalProperty>
+		<property>xds-sender.someProperty</property>
+		<defaultValue></defaultValue>
+		<description>
+			A description of the global property goes here.  The description
+			should explain enough for administrators to understand the purpose
+			and possible values for the global property.
+		</description>
+	</globalProperty>
+	/Required Global Properties -->
+	
+	<!--
+	<dwr>
+		<allow>
+			<create creator="new" javascript="DWRFormEntryService">
+				<param name="class" value="org.openmrs.module.xds-sender.web.DWRFormEntryService"/>
+				<include method="enterForm"/>
+			</create>
+		</allow>
+
+		<signatures>
+			<![CDATA[
+			import org.openmrs.module.xds-sender.web.DWRFormEntryService;
+			DWRFormEntryService.enterForm(Integer patientId, Integer formId, boolean useEncounter, List<String> fields);
+			]]>
+		</signatures>	
+	</dwr>
+	-->
+	
+	<!-- Servlets -->
+	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> 
+	<servlet>
+		<servlet-name>formDownload</servlet-name>
+		<servlet-class>org.openmrs.module.xds-sender.web.FormDownloadServlet</servlet-class>
+	</servlet>
+	-->
+	<!-- /Servlets -->
+	
+	
+	<!-- Internationalization -->
+	<!-- All message codes should start with xds-sender.* -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+	
+</module>
+
